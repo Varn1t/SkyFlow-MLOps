@@ -1,0 +1,11 @@
+{
+  "run_id": "5ff46b9a5f33431586d046026034d6fa",
+  "version": "4",
+  "decision": "APPROVE",
+  "reason": "All model metrics meet their respective thresholds.",
+  "metrics": {
+    "test_accuracy": 0.851,
+    "test_f1": 0.6417,
+    "test_auc": 0.9129
+  }
+}

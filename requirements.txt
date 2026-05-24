@@ -1,0 +1,10 @@
+apache-airflow==2.9.1
+mlflow==3.12.0
+scikit-learn
+pandas
+numpy
+langgraph
+langchain-ollama
+langchain-core
+fastapi
+uvicorn

@@ -1,0 +1,28 @@
+[2026-05-24T16:03:21.931+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-24T16:03:21.943+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: ml_pipeline.run_agent manual__2026-05-24T16:02:32.490427+00:00 [queued]>
+[2026-05-24T16:03:21.946+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: ml_pipeline.run_agent manual__2026-05-24T16:02:32.490427+00:00 [queued]>
+[2026-05-24T16:03:21.947+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2026-05-24T16:03:21.958+0000] {taskinstance.py:2330} INFO - Executing <Task(_PythonDecoratedOperator): run_agent> on 2026-05-24 16:02:32.490427+00:00
+[2026-05-24T16:03:21.964+0000] {standard_task_runner.py:63} INFO - Started process 13554 to run task
+[2026-05-24T16:03:21.966+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'ml_pipeline', 'run_agent', 'manual__2026-05-24T16:02:32.490427+00:00', '--job-id', '28', '--raw', '--subdir', 'DAGS_FOLDER/ml_pipeline.py', '--cfg-path', '/tmp/tmpzg9dwe61']
+[2026-05-24T16:03:21.967+0000] {standard_task_runner.py:91} INFO - Job 28: Subtask run_agent
+[2026-05-24T16:03:21.994+0000] {task_command.py:426} INFO - Running <TaskInstance: ml_pipeline.run_agent manual__2026-05-24T16:02:32.490427+00:00 [running]> on host VarnitLaptop.localdomain
+[2026-05-24T16:03:22.046+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='ml_pipeline' AIRFLOW_CTX_TASK_ID='run_agent' AIRFLOW_CTX_EXECUTION_DATE='2026-05-24T16:02:32.490427+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-05-24T16:02:32.490427+00:00'
+[2026-05-24T16:03:22.048+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-24T16:03:23.199+0000] {logging_mixin.py:188} INFO - 
+[evaluate_node] Fetching metrics from MLflow...
+[2026-05-24T16:03:23.217+0000] {logging_mixin.py:188} INFO - [evaluate_node] Metrics: {'test_accuracy': 0.851, 'test_f1': 0.6417, 'test_auc': 0.9129}
+[2026-05-24T16:03:23.218+0000] {logging_mixin.py:188} INFO - 
+[gate_node] Asking LLM to evaluate model readiness...
+[2026-05-24T16:03:23.354+0000] {_client.py:1025} INFO - HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+[2026-05-24T16:03:23.583+0000] {logging_mixin.py:188} INFO - [gate_node] LLM response: {"decision": "APPROVE", "reason": "All model metrics meet their respective thresholds."}
+[2026-05-24T16:03:23.586+0000] {logging_mixin.py:188} INFO - 
+[decision_node] Final decision: APPROVE
+[2026-05-24T16:03:23.586+0000] {logging_mixin.py:188} INFO - [decision_node] Reason: All model metrics meet their respective thresholds.
+[2026-05-24T16:03:23.586+0000] {logging_mixin.py:188} INFO - Agent verdict: APPROVE — All model metrics meet their respective thresholds.
+[2026-05-24T16:03:23.586+0000] {python.py:237} INFO - Done. Returned value was: {'mlflow_run_id': '5ff46b9a5f33431586d046026034d6fa', 'agent_result': {'decision': 'APPROVE', 'reason': 'All model metrics meet their respective thresholds.', 'metrics': {'test_accuracy': 0.851, 'test_f1': 0.6417, 'test_auc': 0.9129}}}
+[2026-05-24T16:03:23.587+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-24T16:03:23.602+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=ml_pipeline, task_id=run_agent, run_id=manual__2026-05-24T16:02:32.490427+00:00, execution_date=20260524T160232, start_date=20260524T160321, end_date=20260524T160323
+[2026-05-24T16:03:23.664+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-05-24T16:03:23.676+0000] {taskinstance.py:3498} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-05-24T16:03:23.681+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

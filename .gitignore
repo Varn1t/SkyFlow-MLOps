@@ -1,0 +1,24 @@
+# Virtual Environment
+venv/
+.venv/
+env/
+ENV/
+*.venv
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local Data and SQLite DBs
+data/raw/
+data/processed/
+mlflow.db
+mlartifacts/
+
+# Model latest run cache
+models/latest_run_id.txt
+
+# OS metadata
+.DS_Store
+Thumbs.db

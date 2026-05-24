@@ -1,0 +1,30 @@
+[2026-05-24T15:30:31.032+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-24T15:30:31.042+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: ml_pipeline.deploy scheduled__2026-05-23T00:00:00+00:00 [queued]>
+[2026-05-24T15:30:31.045+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: ml_pipeline.deploy scheduled__2026-05-23T00:00:00+00:00 [queued]>
+[2026-05-24T15:30:31.045+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 2
+[2026-05-24T15:30:31.057+0000] {taskinstance.py:2330} INFO - Executing <Task(_PythonDecoratedOperator): deploy> on 2026-05-23 00:00:00+00:00
+[2026-05-24T15:30:31.062+0000] {standard_task_runner.py:63} INFO - Started process 44288 to run task
+[2026-05-24T15:30:31.064+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'ml_pipeline', 'deploy', 'scheduled__2026-05-23T00:00:00+00:00', '--job-id', '18', '--raw', '--subdir', 'DAGS_FOLDER/ml_pipeline.py', '--cfg-path', '/tmp/tmpkivh8bp7']
+[2026-05-24T15:30:31.066+0000] {standard_task_runner.py:91} INFO - Job 18: Subtask deploy
+[2026-05-24T15:30:31.096+0000] {task_command.py:426} INFO - Running <TaskInstance: ml_pipeline.deploy scheduled__2026-05-23T00:00:00+00:00 [running]> on host VarnitLaptop.localdomain
+[2026-05-24T15:30:31.143+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='ml_pipeline' AIRFLOW_CTX_TASK_ID='deploy' AIRFLOW_CTX_EXECUTION_DATE='2026-05-23T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-05-23T00:00:00+00:00'
+[2026-05-24T15:30:31.145+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-24T15:30:31.884+0000] {logging_mixin.py:188} INFO - 
+[deploy] Starting deployment process...
+[2026-05-24T15:30:31.885+0000] {logging_mixin.py:188} INFO - [deploy] Agent decision: APPROVE
+[2026-05-24T15:30:31.885+0000] {logging_mixin.py:188} INFO - [deploy] Reason: All model metrics meet their respective thresholds.
+[2026-05-24T15:30:31.885+0000] {logging_mixin.py:188} INFO - [deploy] Registering model from run d30199e60be24ebcbf06371b2387c67e...
+[2026-05-24T15:30:32.477+0000] {logging_mixin.py:188} WARNING - Registered model 'adult-income-classifier' already exists. Creating a new version of this model...
+[2026-05-24T15:30:32.724+0000] {logging_mixin.py:188} WARNING - 2026/05/24 15:30:32 WARNING mlflow.tracking._model_registry.fluent: Run with id d30199e60be24ebcbf06371b2387c67e has no artifacts at artifact path 'model', registering model based on models:/m-ef6d6d1a8cc64397a1f940ec6bd3f0d6 instead
+[2026-05-24T15:30:32.855+0000] {logging_mixin.py:188} WARNING - 2026/05/24 15:30:32 INFO mlflow.store.model_registry.abstract_store: Waiting up to 300 seconds for model version to finish creation. Model name: adult-income-classifier, version 2
+[2026-05-24T15:30:32.856+0000] {logging_mixin.py:188} WARNING - Created version '2' of model 'adult-income-classifier'.
+[2026-05-24T15:30:33.011+0000] {logging_mixin.py:188} INFO - [deploy] Model registered as version 2
+[2026-05-24T15:30:33.011+0000] {logging_mixin.py:188} INFO - [deploy] Deployment record saved to models/deployment_record.json
+[2026-05-24T15:30:33.011+0000] {logging_mixin.py:188} INFO - [deploy] Model version 2 is now in registry!
+[2026-05-24T15:30:33.011+0000] {logging_mixin.py:188} INFO - Deploy result: {'status': 'success', 'version': '2'}
+[2026-05-24T15:30:33.011+0000] {python.py:237} INFO - Done. Returned value was: {'status': 'success', 'version': '2'}
+[2026-05-24T15:30:33.012+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-24T15:30:33.022+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=ml_pipeline, task_id=deploy, run_id=scheduled__2026-05-23T00:00:00+00:00, execution_date=20260523T000000, start_date=20260524T153031, end_date=20260524T153033
+[2026-05-24T15:30:33.044+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-05-24T15:30:33.052+0000] {taskinstance.py:3498} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-05-24T15:30:33.053+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
