@@ -11,7 +11,51 @@
 
 ## 🏗️ Architecture & Tech Stack
 
-This pipeline is built as a microservices architecture, orchestrated via Docker Compose:
+This pipeline is built as a containerized microservices architecture orchestrated via Docker Compose:
+
+### System Architecture
+```mermaid
+graph TB
+    subgraph Host ["Host Machine (Local Dev)"]
+        H_DB[(mlflow.db)]
+        H_Arts[mlartifacts/]
+        H_Code[src/ Codebase]
+        H_Scaler[models/scaler.pkl]
+    end
+
+    subgraph Docker ["Docker Compose Sandbox"]
+        direction TB
+        subgraph Airflow ["Apache Airflow Service"]
+            AF_Web[Airflow Webserver:8080]
+            AF_Sched[Airflow Scheduler]
+        end
+        
+        subgraph MLflow ["MLflow Service"]
+            MF_Srv[MLflow Server:5000]
+        end
+
+        subgraph LLM ["Ollama Service"]
+            OL_Srv[Ollama Server:11434]
+        end
+    end
+
+    subgraph APIs ["Outbound Services"]
+        OM_API[Open-Meteo Weather API]
+    end
+
+    H_Code -->|Requests live data| OM_API
+    H_Code -->|Scale & Preprocess| H_Scaler
+    H_Code -->|Logs runs & params| MF_Srv
+    H_Code -->|Validates model metrics| OL_Srv
+
+    AF_Sched -->|Orchestrates DAG tasks| H_Code
+    
+    MF_Srv -->|Read/Write SQLite| H_DB
+    MF_Srv -->|Store artifacts| H_Arts
+    
+    MF_Srv -.->|Mount Volume| H_Arts
+    MF_Srv -.->|Mount Volume| H_DB
+```
 
 * **Orchestration:** **Apache Airflow** (Scheduler, Webserver, Init containers) runs the daily pipelines.
 * **Tracking & Registry:** **MLflow** handles experiment parameters, metrics, artifact persistence, and model registration.
@@ -22,6 +66,30 @@ This pipeline is built as a microservices architecture, orchestrated via Docker 
 ---
 
 ## 📊 Pipeline Stages
+
+### Airflow DAG Task Flow
+```mermaid
+graph LR
+    subgraph AirflowDAG ["Airflow DAG: SkyFlow-MLOps Pipeline"]
+        direction LR
+        Ingest[📥 Ingest Task<br>src/ingest.py] -->|weather.csv| Preprocess[⚙️ Preprocess Task<br>src/preprocess.py]
+        Preprocess -->|Scaled X/y train/test| Train[🧠 Train Task<br>src/train.py]
+        Train -->|autologs run ID| RunAgent[🤖 Run Agent Task<br>src/agent_pipeline.py]
+        RunAgent -->|reasoned verdict| Deploy[🚀 Deploy Task<br>src/deploy.py]
+    end
+```
+
+### LangGraph Agent Workflow
+```mermaid
+graph TD
+    Start([Start PipelineState]) --> Node1[evaluate_node<br>Fetch latest run metrics from MLflow]
+    Node1 --> Node2[gate_node<br>Invoke Ollama Llama 3.2 LLM]
+    Node2 --> Router{LLM Evaluation Router}
+    Router -->|All metrics pass thresholds| DeployApprove[decision_node<br>Set decision: APPROVE]
+    Router -->|Any metric fails thresholds| DeployReject[decision_node<br>Set decision: REJECT]
+    DeployApprove --> End([End state: Register Model])
+    DeployReject --> End([End state: Skip Registration])
+```
 
 The pipeline is split into clean, modular Python modules:
 
