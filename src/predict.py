@@ -95,7 +95,8 @@ def predict_tomorrow():
         run_id = f.read().strip()
 
     print(f"[predict] Loading model from run: {run_id}...")
-    mlflow.set_tracking_uri("http://localhost:5000")
+    tracking_uri = os.environ.get("MLFLOW_TRACKING_URI", "http://localhost:5000")
+    mlflow.set_tracking_uri(tracking_uri)
     
     try:
         model = mlflow.sklearn.load_model(f"runs:/{run_id}/model")

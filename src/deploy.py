@@ -17,7 +17,8 @@ def deploy_model(run_id: str, agent_result: dict):
         print("[deploy] Deployment SKIPPED — agent did not approve.")
         return {"status": "skipped", "reason": reason}
 
-    mlflow.set_tracking_uri("http://localhost:5000")
+    tracking_uri = os.environ.get("MLFLOW_TRACKING_URI", "http://localhost:5000")
+    mlflow.set_tracking_uri(tracking_uri)
     client = MlflowClient()
 
     model_name = "skyflow-weather-classifier"

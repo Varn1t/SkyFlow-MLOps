@@ -3,6 +3,7 @@ from langchain_ollama import ChatOllama
 from langchain_core.messages import HumanMessage
 import mlflow
 import json
+import os
 from typing import TypedDict
 
 # ── State shared across all nodes ──────────────────────────────────────────
@@ -16,7 +17,8 @@ class PipelineState(TypedDict):
 # ── Node 1: Evaluate ───────────────────────────────────────────────────────
 def evaluate_node(state: PipelineState) -> PipelineState:
     print("\n[evaluate_node] Fetching metrics from MLflow...")
-    mlflow.set_tracking_uri("http://localhost:5000")
+    tracking_uri = os.environ.get("MLFLOW_TRACKING_URI", "http://localhost:5000")
+    mlflow.set_tracking_uri(tracking_uri)
     client = mlflow.tracking.MlflowClient()
 
     run = client.get_run(state["run_id"])
@@ -34,7 +36,8 @@ def evaluate_node(state: PipelineState) -> PipelineState:
 # ── Node 2: Gate (LLM reasons about deployment) ────────────────────────────
 def gate_node(state: PipelineState) -> PipelineState:
     print("\n[gate_node] Asking LLM to evaluate model readiness...")
-    llm = ChatOllama(model="llama3.2", temperature=0)
+    ollama_base_url = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
+    llm = ChatOllama(model="llama3.2", temperature=0, base_url=ollama_base_url)
 
     prompt = f"""
 You are an ML deployment gatekeeper. Evaluate these metrics carefully.

@@ -13,7 +13,8 @@ def train_model():
     y_test  = pd.read_csv("data/processed/y_test.csv").squeeze()
 
     # MLflow experiment
-    mlflow.set_tracking_uri("http://localhost:5000")
+    tracking_uri = os.environ.get("MLFLOW_TRACKING_URI", "http://localhost:5000")
+    mlflow.set_tracking_uri(tracking_uri)
     mlflow.set_experiment("skyflow-weather-pipeline")
 
     params = {

@@ -27,7 +27,7 @@ services:
     image: python:3.11-slim
     command: >
       bash -c "pip install mlflow==3.12.0 -q &&
-               mlflow server --host 0.0.0.0 --port 5000
+               mlflow server --host 0.0.0.0 --port 5000 --allowed-hosts '*'
                --backend-store-uri sqlite:////mlflow/mlflow.db
                --default-artifact-root /mlflow/artifacts"
     ports:

@@ -22,3 +22,12 @@ models/latest_run_id.txt
 # OS metadata
 .DS_Store
 Thumbs.db
+
+# Airflow local DB, logs, and process files
+airflow/airflow.db
+airflow/logs/
+airflow/airflow-webserver.pid
+airflow/airflow.cfg
+
+# Interview Guide (local-only study sheet as requested)
+interview_prep_guide.md

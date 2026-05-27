@@ -3,7 +3,10 @@ from datetime import datetime
 import sys
 import os
 
-sys.path.insert(0, "/home/varn1t/ml-pipeline")
+# Dynamic root detection for the DAG parsing phase
+PROJECT_ROOT = "/home/varn1t/ml-pipeline" if os.path.exists("/home/varn1t/ml-pipeline") else "/app"
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
 
 @dag(
     schedule="@daily",
@@ -15,25 +18,41 @@ def ml_pipeline():
 
     @task
     def ingest():
-        os.chdir("/home/varn1t/ml-pipeline")
+        import os, sys
+        root = "/home/varn1t/ml-pipeline" if os.path.exists("/home/varn1t/ml-pipeline") else "/app"
+        if root not in sys.path:
+            sys.path.insert(0, root)
+        os.chdir(root)
         from src.ingest import ingest_data
         return ingest_data()
 
     @task
     def preprocess(raw_path: str):
-        os.chdir("/home/varn1t/ml-pipeline")
+        import os, sys
+        root = "/home/varn1t/ml-pipeline" if os.path.exists("/home/varn1t/ml-pipeline") else "/app"
+        if root not in sys.path:
+            sys.path.insert(0, root)
+        os.chdir(root)
         from src.preprocess import preprocess_data
         return preprocess_data()
 
     @task
     def train(processed_path: str):
-        os.chdir("/home/varn1t/ml-pipeline")
+        import os, sys
+        root = "/home/varn1t/ml-pipeline" if os.path.exists("/home/varn1t/ml-pipeline") else "/app"
+        if root not in sys.path:
+            sys.path.insert(0, root)
+        os.chdir(root)
         from src.train import train_model
         return train_model()
 
     @task
     def run_agent(mlflow_run_id: str):
-        os.chdir("/home/varn1t/ml-pipeline")
+        import os, sys
+        root = "/home/varn1t/ml-pipeline" if os.path.exists("/home/varn1t/ml-pipeline") else "/app"
+        if root not in sys.path:
+            sys.path.insert(0, root)
+        os.chdir(root)
         from src.agent_pipeline import run_agent_pipeline
         result = run_agent_pipeline(mlflow_run_id)
         print(f"Agent verdict: {result['decision']} — {result['reason']}")
@@ -41,7 +60,11 @@ def ml_pipeline():
 
     @task
     def deploy(agent_output: dict):
-        os.chdir("/home/varn1t/ml-pipeline")
+        import os, sys
+        root = "/home/varn1t/ml-pipeline" if os.path.exists("/home/varn1t/ml-pipeline") else "/app"
+        if root not in sys.path:
+            sys.path.insert(0, root)
+        os.chdir(root)
         from src.deploy import deploy_model
         result = deploy_model(agent_output["mlflow_run_id"], agent_output["agent_result"])
         print(f"Deploy result: {result}")

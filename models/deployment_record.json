@@ -1,11 +1,11 @@
 {
-  "run_id": "5ff46b9a5f33431586d046026034d6fa",
-  "version": "4",
+  "run_id": "90ae24e3decf4cfe9391d25eb97eb2d6",
+  "version": "3",
   "decision": "APPROVE",
   "reason": "All model metrics meet their respective thresholds.",
   "metrics": {
-    "test_accuracy": 0.851,
-    "test_f1": 0.6417,
-    "test_auc": 0.9129
+    "test_accuracy": 0.8571,
+    "test_f1": 0.6557,
+    "test_auc": 0.9105
   }
 }
