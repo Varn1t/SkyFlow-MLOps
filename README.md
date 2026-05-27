@@ -190,3 +190,6 @@ uvicorn src.app:app --reload --port 8000
 ### 2. MLflow Experiment Tracking & Performance Registry
 ![MLflow Tracking Server](assets/mlflow_runs.png)
 
+### 3. Apache Airflow Orchestrated DAG Pipeline
+![Airflow DAG Runs](assets/airflow_dag.png)
+
