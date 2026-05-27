@@ -179,3 +179,14 @@ uvicorn src.app:app --reload --port 8000
     "day_of_year": 145
   }
   ```
+
+---
+
+## 📸 Screenshots & Dashboards
+
+### 1. Interactive FastAPI Web Serving Dashboard
+![FastAPI Web Dashboard](assets/fastapi_dashboard.png)
+
+### 2. MLflow Experiment Tracking & Performance Registry
+![MLflow Tracking Server](assets/mlflow_runs.png)
+
