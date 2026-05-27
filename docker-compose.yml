@@ -12,6 +12,8 @@ x-airflow-common:
   volumes:
     - ./airflow/dags:/opt/airflow/dags
     - ./airflow/logs:/opt/airflow/logs
+    - ./airflow/airflow.db:/opt/airflow/airflow.db
+    - ./airflow/webserver_config.py:/opt/airflow/webserver_config.py
     - ./data:/app/data
     - ./models:/app/models
     - ./src:/app/src
